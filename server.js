@@ -1,4 +1,3 @@
-require('dns').setDefaultResultOrder('ipv4first');
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -26,6 +25,11 @@ app.set("layout", "layouts/boilerplate");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// DATABASE
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
+
 // ROUTES
 const dashboardRoutes = require("./routers/dashboard");
 const contactRoutes = require("./routers/contact");
@@ -40,21 +44,18 @@ app.get("/home", (req, res) => {
   res.send("Nexora Pvt Ltd Success");
 });
 
-// DATABASE
-// mongoose.connect(process.env.MONGO_URI)
-//   .then(() => console.log("MongoDB Connected"))
-//   .catch(err => console.log(err));
-
-const dbUrl = process.env.MONGO_URI;
-
-main().then( () => {
-    console.log("Connected TO DB")
-}).catch((err) => {
-    console.log(err);
+app.get("/success", (req, res) => {
+  res.render("success");
 });
-async function main() {
-    await mongoose.connect(dbUrl);
-};
+
+app.use((req, res) => {
+  res.status(404).render("404");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
 
 // SERVER
 const PORT = process.env.PORT || 2500;

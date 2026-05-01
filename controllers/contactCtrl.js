@@ -19,7 +19,7 @@ exports.submitContact = async (req, res) => {
 
     await newContact.save();
 
-    console.log("New Contact Saved:", newContact);
+    // console.log("New Contact Saved:", newContact);
 
     // ==========================
     // ✉️ EMAIL LOGIC START HERE
@@ -137,7 +137,7 @@ exports.submitContact = async (req, res) => {
     // ✉️ EMAIL LOGIC END
     // ==========================
 
-    res.redirect("/?success=true");
+    res.redirect("/success");
 
   } catch (error) {
     console.error("Contact Error:", error);

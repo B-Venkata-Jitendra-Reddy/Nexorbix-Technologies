@@ -1,0 +1,68 @@
+<main class="main">
+
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+
+      <!-- Page Heading -->
+      <div class="mb-4 text-center">
+        <h2>📊 Client Contact Data</h2>
+        <p>All submitted inquiries from Nexorbix website</p>
+      </div>
+
+      <div class="row g-4">
+
+        <!-- CHECK IF DATA EXISTS -->
+        <% if (contacts && contacts.length > 0) { %>
+
+          <% contacts.forEach(contact => { %>
+
+            <!-- CARD -->
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+
+              <div class="card shadow-sm border-0 h-100" style="border-radius:12px; overflow:hidden;">
+
+                <!-- Header -->
+                <div style="background:#005555; color:#fff; padding:15px;">
+                  <h5 class="mb-0" style="color: white;"><%= contact.name %></h5>
+                  <small><%= contact.email %></small>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body">
+
+                  <p><strong>📞 Phone:</strong><br> <%= contact.phone %></p>
+
+                  <p><strong>💬 Message:</strong></p>
+                  <div style="background:#f4f6f8; padding:10px; border-radius:8px;">
+                    <%= contact.message %>
+                  </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer text-center text-muted" style="font-size:12px;">
+                  Submitted on<br>
+                  <%= new Date(contact.createdAt).toLocaleString() %>
+                </div>
+
+              </div>
+
+            </div>
+
+          <% }) %>
+
+        <% } else { %>
+
+          <!-- NO DATA -->
+          <div class="col-12 text-center">
+            <h5>No client data available yet 🚫</h5>
+          </div>
+
+        <% } %>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>

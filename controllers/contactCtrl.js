@@ -19,26 +19,27 @@ exports.submitContact = async (req, res) => {
 
     await newContact.save();
 
+    console.log("✅ Contact Saved");
     // console.log("New Contact Saved:", newContact);
 
     // ==========================
     // ✉️ EMAIL LOGIC START HERE
     // ==========================
+    try {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    // 📩 Mail to YOU
-    const adminMail = {
-      from: `"Nexorbix Website" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      subject: "📩 New Contact Form Submission - Nexorbix Technologies",
-      html: `
+      // 📩 Mail to YOU
+      const adminMail = {
+        from: `"Nexorbix Website" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_USER,
+        subject: "📩 New Contact Form Submission - Nexorbix Technologies",
+        html: `
   <div style="font-family: Arial, sans-serif; background:#f4f6f8; padding:20px;">
     
     <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
@@ -73,14 +74,14 @@ exports.submitContact = async (req, res) => {
     </div>
   </div>
   `,
-    };
+      };
 
-    // 📩 Mail to CLIENT
-    const clientMail = {
-      from: `"Nexorbix Team" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: "🚀 Thank You for Contacting Nexorbix Technologies",
-      html: `
+      // 📩 Mail to CLIENT
+      const clientMail = {
+        from: `"Nexorbix Team" <${process.env.EMAIL_USER}>`,
+        to: email,
+        subject: "🚀 Thank You for Contacting Nexorbix Technologies",
+        html: `
   <div style="font-family: Arial, sans-serif; background:#f4f6f8; padding:20px;">
     
     <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
@@ -127,11 +128,18 @@ exports.submitContact = async (req, res) => {
     </div>
   </div>
   `,
-    };
+      };
 
-    // Send emails
-    await transporter.sendMail(adminMail);
-    await transporter.sendMail(clientMail);
+      // Send emails
+      await transporter.sendMail(adminMail);
+      await transporter.sendMail(clientMail);
+
+      console.log("📧 Emails sent");
+
+    } catch (emailError) {
+      console.error("❌ Email failed:", emailError.message);
+      // DON'T crash app
+    }
 
     // ==========================
     // ✉️ EMAIL LOGIC END

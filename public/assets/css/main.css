@@ -6373,3 +6373,382 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+
+/* ========================================
+   NEW COMPONENTS (do not change existing styles)
+   ======================================== */
+
+/* --- Client Logos --- */
+.client-logo {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.client-logo:hover {
+    border-color: #008077;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.client-logo img {
+    max-height: 60px;
+    width: auto;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+.client-logo:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+/* --- Testimonials --- */
+.testimonial-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.testimonial-card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.testimonial-stars {
+    color: #f5b342;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+.testimonial-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text, #333);
+    font-style: italic;
+    margin-bottom: 1.25rem;
+}
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.testimonial-author img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.testimonial-author h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+}
+.testimonial-author span {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* --- Career / Position Cards --- */
+.position-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.position-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    border-color: #008077;
+}
+.position-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.position-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0,128,119,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #008077;
+    flex-shrink: 0;
+}
+.position-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+}
+.position-type {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+}
+.position-type.full-time {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+.position-type.internship {
+    background: #fff3e0;
+    color: #e65100;
+}
+.position-location {
+    font-size: 0.8rem;
+    color: #777;
+}
+.position-location i {
+    margin-right: 0.25rem;
+}
+.position-card h5 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+}
+.position-card p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+.position-card .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+.position-card .tech-tags span {
+    background: #f5f5f5;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: #333;
+}
+.position-link {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #008077;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.3s ease;
+}
+.position-link:hover {
+    gap: 0.75rem;
+    color: #00665e;
+}
+
+/* --- Culture Cards --- */
+.culture-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+.culture-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.culture-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0,128,119,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.75rem;
+    color: #008077;
+}
+.culture-card h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.culture-card p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+/* --- Journey Timeline --- */
+.journey-section {
+    padding-top: 3rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+.timeline-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    padding: 1.75rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.timeline-card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.timeline-year {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #008077;
+    margin-bottom: 0.25rem;
+}
+.timeline-card h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+.timeline-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.timeline-card ul li {
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #555;
+    position: relative;
+    padding-left: 1.25rem;
+}
+.timeline-card ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #008077;
+}
+
+/* --- Methodology Cards --- */
+.method-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    padding: 1.75rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.method-card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.method-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(0,128,119,0.15);
+    margin-bottom: 0.25rem;
+}
+.method-card h5 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.method-card p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+/* --- Career Intro Badge --- */
+.career-intro .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,128,119,0.1);
+    color: #008077;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.feature-list .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+.feature-list .feature-item i {
+    color: #008077;
+    font-size: 1.2rem;
+}
+
+/* --- Responsive tweaks --- */
+@media (max-width: 768px) {
+    .position-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .position-meta {
+        align-items: flex-start;
+    }
+    .method-number {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+/* Footer Newsletter */
+.footer-newsletter .position-relative {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 0.2rem 0.2rem 0.2rem 1rem;
+    transition: border-color 0.3s ease;
+}
+.footer-newsletter .position-relative:focus-within {
+    border-color: #008077;
+    box-shadow: 0 0 0 3px rgba(0,128,119,0.15);
+}
+.footer-newsletter input {
+    border: none;
+    padding: 0.6rem 0;
+    flex: 1;
+    background: transparent;
+    outline: none;
+    font-size: 0.9rem;
+    color: #333;
+}
+.footer-newsletter input::placeholder {
+    color: #aaa;
+}
+.btn-subscribe {
+    background: #008077;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.btn-subscribe:hover {
+    background: #00665e;
+}

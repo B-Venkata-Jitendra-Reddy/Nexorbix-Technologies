@@ -14,6 +14,50 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// =====================================================
+// COOKIE PARSER
+// =====================================================
+
+// Small built-in cookie parser.
+// No cookie-parser package required.
+app.use((req, res, next) => {
+
+  req.cookies = {};
+
+  const cookieHeader = req.headers.cookie;
+
+  if (cookieHeader) {
+
+    cookieHeader.split(";").forEach((cookie) => {
+
+      const separatorIndex = cookie.indexOf("=");
+
+      if (separatorIndex === -1) {
+        return;
+      }
+
+      const name = cookie
+        .substring(0, separatorIndex)
+        .trim();
+
+      const value = cookie
+        .substring(separatorIndex + 1)
+        .trim();
+
+      if (name) {
+
+        req.cookies[name] = decodeURIComponent(value);
+
+      }
+
+    });
+
+  }
+
+  next();
+
+});
+
 // Static Files
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -27,39 +71,44 @@ app.set("views", path.join(__dirname, "views"));
 
 // DATABASE
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => console.log("❌ MongoDB Connection Error:", err.message));
 
 // ROUTES
-const dashboardRoutes = require("./routers/dashboard");
-const contactRoutes = require("./routers/contact");
-const clientdataRoutes = require("./routers/clientdata");
+const dashboardRoutes = require("./routers/dashboardRoutes");
+const contactRoutes = require("./routers/contactRoutes");
+const adminRoutes = require("./routers/adminRoutes");
 
+// Public website routes
 app.use("/", dashboardRoutes);
-app.use("/contact", contactRoutes);
-app.use("/clientdata", clientdataRoutes)
+// Contact routes
+app.use("/", contactRoutes);
+// Admin routes
+app.use("/admin", adminRoutes);
 
-// Test Route
-app.get("/home", (req, res) => {
-  res.send("Nexora Pvt Ltd Success");
+
+app.use((err, req, res, next) => {
+  console.error("❌ Server Error:", err.stack);
+  res.status(500).send("Something went wrong!");
 });
 
-app.get("/success", (req, res) => {
-  res.render("success");
-});
 
 app.use((req, res) => {
   res.status(404).render("404");
 });
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something went wrong!");
-});
 
 // SERVER
-const PORT = process.env.PORT || 2500;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+  console.log(
+    `🚀 NexOrbiX server running on port ${PORT}`
+  );
+
+  console.log(
+    `🔐 Admin login: http://localhost:${PORT}/admin/login`
+  );
+
 });

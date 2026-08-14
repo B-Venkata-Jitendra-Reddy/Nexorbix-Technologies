@@ -1,7 +1,13 @@
 const crypto = require("crypto");
+const mongoose = require("mongoose");
+
+const Contact = require("../models/contact");
+
 
 const ADMIN_COOKIE_NAME = "nexorbix_admin";
-const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours
+
+const SESSION_DURATION =
+    8 * 60 * 60 * 1000; // 8 hours
 
 
 // ==========================================
@@ -10,21 +16,28 @@ const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours
 
 const createAdminToken = (email) => {
 
-    const expiresAt = Date.now() + SESSION_DURATION;
+    const expiresAt =
+        Date.now() + SESSION_DURATION;
 
-    const payload = `${email}|${expiresAt}`;
 
-    const signature = crypto
-        .createHmac(
-            "sha256",
-            process.env.ADMIN_SESSION_SECRET
-        )
-        .update(payload)
-        .digest("hex");
+    const payload =
+        `${email}|${expiresAt}`;
+
+
+    const signature =
+        crypto
+            .createHmac(
+                "sha256",
+                process.env.ADMIN_SESSION_SECRET
+            )
+            .update(payload)
+            .digest("hex");
+
 
     return `${Buffer
         .from(payload)
         .toString("base64url")}.${signature}`;
+
 };
 
 
@@ -32,23 +45,39 @@ const createAdminToken = (email) => {
 // SAFE STRING COMPARISON
 // ==========================================
 
-const safeCompare = (value, expected) => {
+const safeCompare = (
+    value,
+    expected
+) => {
 
     if (!value || !expected) {
         return false;
     }
 
-    const valueBuffer = Buffer.from(value);
-    const expectedBuffer = Buffer.from(expected);
 
-    if (valueBuffer.length !== expectedBuffer.length) {
+    const valueBuffer =
+        Buffer.from(value);
+
+
+    const expectedBuffer =
+        Buffer.from(expected);
+
+
+    if (
+        valueBuffer.length !==
+        expectedBuffer.length
+    ) {
+
         return false;
+
     }
+
 
     return crypto.timingSafeEqual(
         valueBuffer,
         expectedBuffer
     );
+
 };
 
 
@@ -56,28 +85,38 @@ const safeCompare = (value, expected) => {
 // GET /admin/login
 // ==========================================
 
-exports.getLogin = (req, res) => {
+exports.getLogin = (
+    req,
+    res
+) => {
 
     res.set(
         "Cache-Control",
         "no-store"
     );
 
+
     if (req.admin) {
-        return res.redirect("/admin/dashboard");
+
+        return res.redirect(
+            "/admin/dashboard"
+        );
+
     }
 
-    res.render("admin/login", {
 
-        // IMPORTANT:
-        // Prevent public NexOrbiX navbar/footer
-        layout: false,
+    res.render(
+        "admin/login",
+        {
 
-        title: "Admin Login",
+            layout: false,
 
-        error: null
+            title: "Admin Login",
 
-    });
+            error: null
+
+        }
+    );
 
 };
 
@@ -86,23 +125,32 @@ exports.getLogin = (req, res) => {
 // POST /admin/login
 // ==========================================
 
-exports.login = (req, res) => {
+exports.login = (
+    req,
+    res
+) => {
 
     res.set(
         "Cache-Control",
         "no-store"
     );
 
-    const { email, password } = req.body;
+
+    const {
+        email,
+        password
+    } = req.body;
+
 
     const adminEmail =
         process.env.ADMIN_EMAIL;
+
 
     const adminPassword =
         process.env.ADMIN_PASSWORD;
 
 
-    // Check environment configuration
+    // Check configuration
 
     if (
         !adminEmail ||
@@ -114,79 +162,89 @@ exports.login = (req, res) => {
             "❌ Admin authentication environment variables are missing."
         );
 
-        return res.status(500).render(
-            "admin/login",
-            {
 
-                // IMPORTANT
-                layout: false,
+        return res
+            .status(500)
+            .render(
+                "admin/login",
+                {
 
-                title: "Admin Login",
+                    layout: false,
 
-                error:
-                    "Admin authentication is not configured."
+                    title: "Admin Login",
 
-            }
-        );
+                    error:
+                        "Admin authentication is not configured."
+
+                }
+            );
 
     }
 
 
     // Validate email
 
-    const validEmail = safeCompare(
+    const validEmail =
+        safeCompare(
 
-        String(email || "")
-            .trim()
-            .toLowerCase(),
+            String(email || "")
+                .trim()
+                .toLowerCase(),
 
-        adminEmail
-            .trim()
-            .toLowerCase()
+            adminEmail
+                .trim()
+                .toLowerCase()
 
-    );
+        );
 
 
     // Validate password
 
-    const validPassword = safeCompare(
+    const validPassword =
+        safeCompare(
 
-        String(password || ""),
+            String(password || ""),
 
-        adminPassword
+            adminPassword
 
-    );
+        );
 
 
     // Invalid credentials
 
-    if (!validEmail || !validPassword) {
+    if (
+        !validEmail ||
+        !validPassword
+    ) {
 
-        return res.status(401).render(
-            "admin/login",
-            {
+        return res
+            .status(401)
+            .render(
+                "admin/login",
+                {
 
-                // IMPORTANT
-                layout: false,
+                    layout: false,
 
-                title: "Admin Login",
+                    title: "Admin Login",
 
-                error:
-                    "Invalid email or password."
+                    error:
+                        "Invalid email or password."
 
-            }
-        );
+                }
+            );
 
     }
 
 
-    // Create authentication token
+    // Create token
 
     const token =
-        createAdminToken(adminEmail);
+        createAdminToken(
+            adminEmail
+        );
 
 
-    // Set HTTP-only cookie
+    // Secure cookie
 
     res.cookie(
         ADMIN_COOKIE_NAME,
@@ -196,11 +254,13 @@ exports.login = (req, res) => {
             httpOnly: true,
 
             secure:
-                process.env.NODE_ENV === "production",
+                process.env.NODE_ENV ===
+                "production",
 
             sameSite: "lax",
 
-            maxAge: SESSION_DURATION,
+            maxAge:
+                SESSION_DURATION,
 
             path: "/"
 
@@ -224,34 +284,134 @@ exports.login = (req, res) => {
 // GET /admin/dashboard
 // ==========================================
 
-exports.getDashboard = async (
-    req,
-    res
-) => {
+exports.getDashboard = async (req, res) => {
 
-    res.set(
-        "Cache-Control",
-        "no-store"
-    );
+    try {
+
+        res.set(
+            "Cache-Control",
+            "no-store"
+        );
+
+        const contacts = await Contact
+            .find()
+            .sort({
+                createdAt: -1
+            })
+            .lean();
+
+        return res.render(
+            "admin/dashboard",
+            {
+                layout: false,
+
+                title: "Admin Dashboard",
+
+                adminEmail:
+                    req.admin.email,
+
+                contacts,
+
+                contactCount:
+                    contacts.length
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "❌ Admin Dashboard Error:",
+            error
+        );
+
+        return res
+            .status(500)
+            .send(
+                "Unable to load admin dashboard."
+            );
+    }
+};
 
 
-    res.render(
-        "admin/dashboard",
-        {
+// ==========================================
+// DELETE CLIENT CONTACT
+// POST /admin/contacts/:id/delete
+// ==========================================
 
-            // IMPORTANT:
-            // Do NOT use public boilerplate layout
-            layout: false,
+exports.deleteContact =
+    async (
+        req,
+        res
+    ) => {
 
-            title: "Admin Dashboard",
+        try {
 
-            adminEmail:
-                req.admin.email
+            const {
+                id
+            } = req.params;
+
+
+            // Validate MongoDB ObjectId
+
+            if (
+                !mongoose.Types.ObjectId.isValid(id)
+            ) {
+
+                return res
+                    .status(400)
+                    .send(
+                        "Invalid contact ID."
+                    );
+
+            }
+
+
+            // Delete contact
+
+            const deletedContact =
+                await Contact.findByIdAndDelete(
+                    id
+                );
+
+
+            if (!deletedContact) {
+
+                return res
+                    .status(404)
+                    .send(
+                        "Client contact not found."
+                    );
+
+            }
+
+
+            console.log(
+                `🗑️ Client contact deleted: ${id}`
+            );
+
+
+            return res.redirect(
+                "/admin/dashboard?deleted=1"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "❌ Delete Contact Error:",
+                error
+            );
+
+
+            return res
+                .status(500)
+                .send(
+                    "Unable to delete client contact."
+                );
 
         }
-    );
 
-};
+    };
 
 
 // ==========================================
@@ -267,7 +427,8 @@ exports.logout = (req, res) => {
             httpOnly: true,
 
             secure:
-                process.env.NODE_ENV === "production",
+                process.env.NODE_ENV ===
+                "production",
 
             sameSite: "lax",
 
@@ -283,7 +444,68 @@ exports.logout = (req, res) => {
 
 
     return res.redirect(
-        "/admin/login"
+        "/"
     );
+
+};
+
+
+// ==========================================
+// GET /admin/tables
+// ==========================================
+
+exports.getTables = async (req, res) => {
+
+    try {
+
+        res.set(
+            "Cache-Control",
+            "no-store"
+        );
+
+
+        const contacts = await Contact
+            .find()
+            .sort({
+                createdAt: -1
+            })
+            .lean();
+
+
+        return res.render(
+            "admin/tables",
+            {
+
+                layout: false,
+
+                title: "Contact Data",
+
+                adminEmail:
+                    req.admin.email,
+
+                contacts,
+
+                contactCount:
+                    contacts.length
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ Admin Tables Error:",
+            error
+        );
+
+
+        return res
+            .status(500)
+            .send(
+                "Unable to load contact data."
+            );
+
+    }
 
 };

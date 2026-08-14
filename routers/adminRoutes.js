@@ -10,15 +10,12 @@ const adminAuth = require("../middleware/adminAuth");
 // ADMIN LOGIN
 // ==========================================
 
-// Show login page
 router.get(
     "/login",
     adminAuth.checkAdmin,
     adminCtrl.getLogin
 );
 
-
-// Process login
 router.post(
     "/login",
     adminCtrl.login
@@ -26,14 +23,36 @@ router.post(
 
 
 // ==========================================
-// PROTECTED ADMIN AREA
+// ADMIN DASHBOARD
 // ==========================================
 
-// Admin dashboard
 router.get(
     "/dashboard",
     adminAuth.requireAdmin,
     adminCtrl.getDashboard
+);
+
+
+// ==========================================
+// ADMIN TABLES
+// CLIENT CONTACT DATA
+// ==========================================
+
+router.get(
+    "/tables",
+    adminAuth.requireAdmin,
+    adminCtrl.getTables
+);
+
+
+// ==========================================
+// DELETE CONTACT
+// ==========================================
+
+router.post(
+    "/contacts/:id/delete",
+    adminAuth.requireAdmin,
+    adminCtrl.deleteContact
 );
 
 

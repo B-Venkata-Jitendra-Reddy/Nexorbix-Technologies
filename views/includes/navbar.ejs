@@ -1,20 +1,49 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
+  <div class="container position-relative d-flex align-items-center justify-content-between">
 
-        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-            <!-- <img src="assets/img/logo.png" alt=""> -->
-            <h1 class="sitename">NexOrbi</h1><span>X</span>
-        </a>
+    <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1 class="sitename">NexOrbi</h1><span>X</span>
+    </a>
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="/" class="active">Home</a></li>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li>
+          <a href="/" class="<%= req.path === '/' ? 'active' : '' %>">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="/about" class="<%= req.path === '/about' ? 'active' : '' %>">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a href="/services" class="<%= req.path === '/services' ? 'active' : '' %>">
+            Our Services
+          </a>
+        </li>
+
+        <li>
+          <a href="/products" class="<%= req.path === '/products' ? 'active' : '' %>">
+            Products
+          </a>
+        </li>
+
+        <li>
+          <a href="/internships" class="<%= req.path === '/internships' ? 'active' : '' %>">
+            Internships
+          </a>
+        </li>
+        <!-- <li><a href="/" class="active">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/services">Our Services</a></li>
                 <li><a href="/products">Products</a></li>
-                <li><a href="/internships">Internships</a></li>
-                <!-- <li><a href="/admin/login">Login</a></li> -->
-                <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i
+                <li><a href="/internships">Internships</a></li> -->
+        <!-- <li><a href="/admin/login">Login</a></li> -->
+        <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="#">Dropdown 1</a></li>
@@ -33,11 +62,11 @@
                         </li>
                     </ul>
                 </li> -->
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
 
-        <a class="btn-getstarted" href="/contact">Contact us</a>
+    <a class="btn-getstarted" href="/contact">Contact us</a>
 
-    </div>
+  </div>
 </header>

@@ -74,6 +74,12 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ MongoDB Connection Error:", err.message));
 
+
+app.use((req, res, next) => {
+  res.locals.req = req;
+  next();
+});
+
 // ROUTES
 const dashboardRoutes = require("./routers/dashboardRoutes");
 const contactRoutes = require("./routers/contactRoutes");

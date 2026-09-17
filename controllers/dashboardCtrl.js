@@ -23,8 +23,8 @@ exports.getProductsPage = (req, res) => {
 };
 
 exports.getInternshipsPage = (req, res) => {
-    res.render('internships', {
-        title: 'Internships Page',
+    res.render('internship', {
+        title: 'Internship Page',
     });
 };
 

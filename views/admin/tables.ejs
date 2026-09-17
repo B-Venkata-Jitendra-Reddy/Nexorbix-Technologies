@@ -346,6 +346,10 @@
                     </th>
 
                     <th scope="col">
+                      Subject
+                    </th>
+
+                    <th scope="col">
                       Message
                     </th>
 
@@ -418,16 +422,24 @@
 
                     </td>
 
+                    <!-- SUBJECT -->
+
+                    <td>
+
+                      <span style="display:block; white-space:normal; word-break:break-word;">
+
+                        <%= contact.subject %>
+
+                      </span>
+
+                    </td>
+
 
                     <!-- MESSAGE -->
 
                     <td style="min-width:260px; max-width:400px;">
 
-                      <span style="
-                                                        display:block;
-                                                        white-space:normal;
-                                                        word-break:break-word;
-                                                    ">
+                      <span style="display:block; white-space:normal; word-break:break-word;">
 
                         <%= contact.message %>
 

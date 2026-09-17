@@ -22,9 +22,9 @@ exports.getProductsPage = (req, res) => {
     });
 };
 
-exports.getCareerPage = (req, res) => {
-    res.render('career', {
-        title: 'Careers Page',
+exports.getInternshipsPage = (req, res) => {
+    res.render('internships', {
+        title: 'Internships Page',
     });
 };
 

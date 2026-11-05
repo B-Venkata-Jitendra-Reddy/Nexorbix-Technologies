@@ -84,6 +84,7 @@ app.use((req, res, next) => {
 const dashboardRoutes = require("./routers/dashboardRoutes");
 const contactRoutes = require("./routers/contactRoutes");
 const adminRoutes = require("./routers/adminRoutes");
+const internshipRoutes = require("./routers/internshipRoutes");
 
 // Public website routes
 app.use("/", dashboardRoutes);
@@ -91,6 +92,8 @@ app.use("/", dashboardRoutes);
 app.use("/", contactRoutes);
 // Admin routes
 app.use("/admin", adminRoutes);
+// Registration API.
+app.use("/internships", internshipRoutes);
 
 
 app.use((err, req, res, next) => {
